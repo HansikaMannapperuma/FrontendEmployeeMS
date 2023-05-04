@@ -77,15 +77,15 @@ function getAllEmployees(){
         url:"http://localhost:8080/api/v1/employee/getAllEmployees",
         async:true,
         success:function (data){
-            if (data.code=="00"){
+            if (data.code==="00"){
                 $('#empTable').empty();
-                for (let emp of data.content){
+                for (let emp of data.context){
                     let empId=emp.empId
                     let name=emp.empName
                     let address=emp.empAddress
                     let number=emp.empNumber
 
-                    var row='<tr><td>${empId}</td><td>${name}</td><td>${address}</td>${number}<td></td></tr>';
+                    let row=`<tr><td>${empId}</td><td>${name}</td><td>${address}</td><td>${number}</td></tr>`;
                     $('#empTable').append(row);
                 }
             }
