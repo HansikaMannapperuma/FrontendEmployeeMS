@@ -1,9 +1,9 @@
-getAllEmployees()
+getAllEmployees();
 function saveEmployee(){
-    let name=$('exampleFormControlInput2').val();
-    let address=$('exampleFormControlInput3').val();
-    let number=$('exampleFormControlInput4').val();
-    $.ajax(e,{
+    let name=$('#exampleFormControlInput2').val();
+    let address=$('#exampleFormControlInput3').val();
+    let number=$('#exampleFormControlInput4').val();
+    $.ajax({
         method:"POST",
         contentType:"application/json",
         url:"http://localhost:8080/api/v1/employee/saveEmployee",
@@ -26,17 +26,17 @@ function saveEmployee(){
 }
 
 function updateEmployee(){
-    let empId=$('exampleFormControlInput1').val();
-    let name=$('exampleFormControlInput2').val();
-    let address=$('exampleFormControlInput3').val();
-    let number=$('exampleFormControlInput4').val();
-    $.ajax(e,{
+    let empId=$('#exampleFormControlInput1').val();
+    let name=$('#exampleFormControlInput2').val();
+    let address=$('#exampleFormControlInput3').val();
+    let number=$('#exampleFormControlInput4').val();
+    $.ajax({
         method:"PUT",
         contentType:"application/json",
         url:"http://localhost:8080/api/v1/employee/updateEmployee",
         async:true,
         data:JSON.stringify({
-            "empId":id,
+            "empId":empId,
             "empName":name,
             "empAddress":address,
             "empNumber":number
@@ -53,12 +53,12 @@ function updateEmployee(){
 }
 
 function deleteEmployee(){
-    let empId=$('exampleFormControlInput1').val();
+    let empId=$('#exampleFormControlInput1').val();
 
-    $.ajax(e,{
+    $.ajax({
         method:"DELETE",
         contentType:"application/json",
-        url:"http://localhost:8080/api/v1/employee/deleteEmployee"+empId,
+        url:"http://localhost:8080/api/v1/employee/deleteEmployee/"+empId,
         async:true,
         success:function (data){
             alert("deleted")
@@ -71,7 +71,7 @@ function deleteEmployee(){
 }
 
 function getAllEmployees(){
-    $.ajax(e,{
+    $.ajax({
         method:"GET",
         contentType:"application/json",
         url:"http://localhost:8080/api/v1/employee/getAllEmployees",
@@ -85,14 +85,28 @@ function getAllEmployees(){
                     let address=emp.empAddress
                     let number=emp.empNumber
 
-                    var row="<tr><td>${empId}</td><td>${name}</td><td>${address}</td>${number}<td></td></tr>";
+                    var row='<tr><td>${empId}</td><td>${name}</td><td>${address}</td>${number}<td></td></tr>';
                     $('#empTable').append(row);
                 }
             }
-            alert("deleted")
+
         },
         error:function (xhr,exception){
             alert("Error")
         }
     })
 }
+$(document).ready(function () {
+    $(document).on('click', '#empTable tr', function () {
+        var col0 = $(this).find('td:eq(0)').text();
+        var col1 = $(this).find('td:eq(1)').text();
+        var col2 = $(this).find('td:eq(2)').text();
+        var col3 = $(this).find('td:eq(3)').text();
+
+        $('#exampleFormControlInput1').val(col0);
+        $('#exampleFormControlInput2').val(col1);
+        $('#exampleFormControlInput3').val(col2);
+        $('#exampleFormControlInput4').val(col3);
+
+    })
+})
